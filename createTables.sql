@@ -17,6 +17,3 @@ alter table courseoffers add primary key (courseofferid);
 alter table studentregistrationstodegrees add column totalects smallint;
 update studentregistrationstodegrees set totalects = degrees.totalects from degrees where studentregistrationstodegrees.degreeid = degrees.degreeid;
 alter table studentregistrationstodegrees add primary key(studentregistrationid);
-CREATE TABLE greaterFive AS SELECT  courseregistrations.studentregistrationid, studentid, studentregistrationstodegrees.degreeid, courseName, grade, year, quartile, ects FROM courseregistrations, studentregistrationstodegrees, courseoffers WHERE studentregistrationstodegrees.studentregistrationid = courseregistrations.studentregistrationid AND  grade >= 5 AND courseregistrations.courseofferid = courseoffers.courseofferid;
-CREATE TABLE failedcourses AS  SELECT distinct studentregistrationid FROM courseregistrations WHERE grade < 5;
-create table studenttotalcredits as (SELECT  courseRegistrations.studentregistrationid, SUM(case when courseRegistrations.grade >= 5 then courseoffers.ects else 0 end) as totalects, SUM(case when courseRegistrations.grade >= 5 then courseoffers.ects*courseRegistrations.grade else 0 end) AS gradeects FROM courseregistrations, courseoffers WHERE courseregistrations.courseofferid = courseoffers.courseofferid GROUP BY courseRegistrations.studentregistrationid);
