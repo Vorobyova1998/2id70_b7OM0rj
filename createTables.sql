@@ -7,13 +7,14 @@ COPY courses(courseid, coursename, coursedescription, degreeid, ects) FROM '/mnt
 COPY TeacherAssignmentsToCourses(courseofferid, teacherid) FROM '/mnt/ramdisk/tables/TeacherAssignmentsToCourses.table' DELIMITER ',' CSV HEADER;
 COPY studentassistants(courseofferid, studentregistrationid) FROM '/mnt/ramdisk/tables/StudentAssistants.table' DELIMITER ',' CSV HEADER;
 COPY courseoffers(courseofferid, courseid, year, quartile) FROM '/mnt/ramdisk/tables/CourseOffers.table' DELIMITER ',' CSV HEADER;
---alter table studentassistants add primary key(courseofferid, studentregistrationid);
---alter table courseregistrations add primary key (courseofferid, studentregistrationid);
---alter table courseoffers add column coursename varchar(50), add column ects smallint, add column degreeid int;
---update courseoffers set coursename = courses.coursename from courses where courseoffers.courseid = courses.courseid;
---update courseoffers set ects = courses.ects from courses where courseoffers.courseid = courses.courseid;
---update courseoffers set degreeid = courses.degreeid from courses where courseoffers.courseid = courses.courseid;
---alter table courseoffers add primary key (courseofferid);
---alter table studentregistrationstodegrees add column totalects smallint;
---update studentregistrationstodegrees set totalects = degrees.totalects from degrees where studentregistrationstodegrees.degreeid = degrees.degreeid;
---alter table studentregistrationstodegrees add primary key(studentregistrationid);
+alter table studentassistants add primary key(courseofferid, studentregistrationid);
+alter table courseregistrations add primary key (courseofferid, studentregistrationid);
+alter table courseoffers add column coursename varchar(50), add column ects smallint, add column degreeid int;
+update courseoffers set coursename = courses.coursename from courses where courseoffers.courseid = courses.courseid;
+update courseoffers set ects = courses.ects from courses where courseoffers.courseid = courses.courseid;
+update courseoffers set degreeid = courses.degreeid from courses where courseoffers.courseid = courses.courseid;
+alter table courseoffers add primary key (courseofferid);
+alter table studentregistrationstodegrees add column totalects smallint;
+update studentregistrationstodegrees set totalects = degrees.totalects from degrees where studentregistrationstodegrees.degreeid = degrees.degreeid;
+alter table studentregistrationstodegrees add primary key(studentregistrationid);
+ANALYZE VERBOSE
